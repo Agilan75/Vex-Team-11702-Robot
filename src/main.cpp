@@ -22,18 +22,18 @@ motor rightMotorB = motor(PORT4, true);
 motor_group leftMotors(leftMotorA, leftMotorB);
 motor_group rightMotors(rightMotorA, rightMotorB);
 
-// 4 motor object
+// 4 motor drivetrain object
 drivetrain Drivetrain = drivetrain(leftMotors, rightMotors, 259.34, 320, 40, mm, 1);
 
 void userControlLoop() {
     // inital velocity
     Drivetrain.setDriveVelocity(100, percent);
-    Drivetrain.setStopping(brake);  // stopping for brakw
+    Drivetrain.setStopping(brake);  // Stopping with brake
 
     while (true) {
         // get valyes for joystick positon
-        int forwardSpeed = Controller.Axis3.position();
-        int turnSpeed = Controller.Axis4.position();   
+        int forwardSpeed = Controller.Axis2.position() * 0.65;
+        int turnSpeed = Controller.Axis1.position() * 0.65;   
 
         // get speeds
         int leftSpeed = forwardSpeed + turnSpeed;
@@ -43,14 +43,17 @@ void userControlLoop() {
         leftMotors.spin(forward, leftSpeed, percent);
         rightMotors.spin(forward, rightSpeed, percent);
 
+        // Stop motors if both joysticks are centered
         if (forwardSpeed == 0 && turnSpeed == 0) {
-            Drivetrain.stop();
+            leftMotors.stop();
+            rightMotors.stop();
         }
 
+    
     }
 }
 
 int main() {
-    vexcodeInit();
+    // Start the user control loop
     userControlLoop();
 }
