@@ -6,54 +6,74 @@
 /*    Description:  V5 project                                                */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
-#include "vex.h"
 
+#include "vex.h"
 using namespace vex;
 
-// initalize things
-brain Brain;
-controller Controller;
+// initialize
+motor leftMotorA(PORT1, false);
+motor leftMotorB(PORT2, false);
+motor rightMotorA(PORT3, true);
+motor rightMotorB(PORT4, true);
 
-motor leftMotorA = motor(PORT1, false);
-motor leftMotorB = motor(PORT2, false);
-motor rightMotorA = motor(PORT3, true);
-motor rightMotorB = motor(PORT4, true);
-
-// group motors
 motor_group leftMotors(leftMotorA, leftMotorB);
 motor_group rightMotors(rightMotorA, rightMotorB);
 
-// 4 motor drivetrain object
-drivetrain Drivetrain = drivetrain(leftMotors, rightMotors, 259.34, 320, 40, mm, 1);
+drivetrain Drivetrain(leftMotors, rightMotors, 259.34, 320, 40, mm, 1);
 
-void Drivetrain() {
-    // setting the iniital speed
-    Drivetrain.setDriveVelocity(100, percent);
-    Drivetrain.setStopping(brake);  // Stopping with brake
+// set constant for joysticks (I think this what im meant to do)
+controller Controller;
+const float Kp = 0.5;   
+const float Ki = 0.01;  
+const float Kd = 0.1;   
+const float Kf = 0.2;  
 
+// for error tracking
+float targetX = 0;
+float targetY = 0;
+float errorX, errorY, prevErrorX = 0, prevErrorY = 0;
+float integralX = 0, integralY = 0;
+float derivativeX, derivativeY;
+
+// feed-forward stuffs
+float feedForward(float joystickVal) {
+    return joystickVal * Kf;
+}
+
+// to get pid output
+float pid(float target, float current, float &prevError, float &integral) {
+    float error = target - current;
+    integral += error;
+    float derivative = error - prevError;
+    prevError = error;
+    return (Kp * error) + (Ki * integral) + (Kd * derivative);
+}
+
+//the main drive loop
+void usercontrol() {
     while (true) {
-        // get valyes for joystick positon
-        int forward = Controller.Axis2.position() * 0.65;
-        int turn = Controller.Axis1.position() * 0.65;   
-        
-        // get speeds
-        int left = forward + turn;
-        int right = forward - turn;
+        // get joystick vals
+        float joystickX = Controller.Axis4.position();
+        float joystickY = Controller.Axis3.position();
 
-        // controls to move
-        leftMotors.spin(forward, left, percent);
-        rightMotors.spin(forward, right, percent);
+        // use feedforward to get needed speed
+        float feedForwardX = feedForward(joystickX);
+        float feedForwardY = feedForward(joystickY);
 
-        // stop when nothing happening
-        if (forwardSpeed == 0 && turnSpeed == 0) {
-            leftMotors.stop();
-            rightMotors.stop();
-        }
+        // update it
+        float currentX = leftMotors.position(degrees) - rightMotors.position(degrees);
+        float currentY = (leftMotors.position(degrees) + rightMotors.position(degrees)) / 2;
 
-    
+        float pidAdjustX = pidControl(feedForwardX, currentX, prevErrorX, integralX);
+        float pidAdjustY = pidControl(feedForwardY, currentY, prevErrorY, integralY);
+
+        leftMotors.spin(forward, feedForwardY + pidAdjustY, velocityUnits::pct);
+        rightMotors.spin(forward, feedForwardY - pidAdjustY, velocityUnits::pct);
+
+        wait(20, msec);
     }
 }
 
 int main() {
-    Drivetrain();
+    usercontrol();
 }
