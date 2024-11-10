@@ -13,6 +13,7 @@ using namespace vex;
 // initalize things
 brain Brain;
 controller Controller;
+
 motor leftMotorA = motor(PORT1, false);
 motor leftMotorB = motor(PORT2, false);
 motor rightMotorA = motor(PORT3, true);
@@ -25,25 +26,25 @@ motor_group rightMotors(rightMotorA, rightMotorB);
 // 4 motor drivetrain object
 drivetrain Drivetrain = drivetrain(leftMotors, rightMotors, 259.34, 320, 40, mm, 1);
 
-void userControlLoop() {
-    // inital velocity
+void Drivetrain() {
+    // setting the iniital speed
     Drivetrain.setDriveVelocity(100, percent);
     Drivetrain.setStopping(brake);  // Stopping with brake
 
     while (true) {
         // get valyes for joystick positon
-        int forwardSpeed = Controller.Axis2.position() * 0.65;
-        int turnSpeed = Controller.Axis1.position() * 0.65;   
-
+        int forward = Controller.Axis2.position() * 0.65;
+        int turn = Controller.Axis1.position() * 0.65;   
+        
         // get speeds
-        int leftSpeed = forwardSpeed + turnSpeed;
-        int rightSpeed = forwardSpeed - turnSpeed;
+        int left = forward + turn;
+        int right = forward - turn;
 
         // controls to move
-        leftMotors.spin(forward, leftSpeed, percent);
-        rightMotors.spin(forward, rightSpeed, percent);
+        leftMotors.spin(forward, left, percent);
+        rightMotors.spin(forward, right, percent);
 
-        // Stop motors if both joysticks are centered
+        // stop when nothing happening
         if (forwardSpeed == 0 && turnSpeed == 0) {
             leftMotors.stop();
             rightMotors.stop();
@@ -54,6 +55,5 @@ void userControlLoop() {
 }
 
 int main() {
-    // Start the user control loop
-    userControlLoop();
+    Drivetrain();
 }
