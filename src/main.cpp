@@ -7,13 +7,18 @@ controller Controller;
 
 motor leftMotorA = motor(PORT1, false);
 motor leftMotorB = motor(PORT2, false);
-motor rightMotorA = motor(PORT3, true);
-motor rightMotorB = motor(PORT4, true);
+motor leftMotorC = motor(PORT3, false);
+motor rightMotorA = motor(PORT4, true);
+motor rightMotorB = motor(PORT5, true);
+motor rightMotorC = motor(PORT6, true);
 
-motor_group leftMotors(leftMotorA, leftMotorB);
-motor_group rightMotors(rightMotorA, rightMotorB);
+motor_group leftMotors(leftMotorA, leftMotorB, leftMotorC);
+motor_group rightMotors(rightMotorA, rightMotorB, rightMotorC);
 
 drivetrain Drivetrain = drivetrain(leftMotors, rightMotors, 259.34, 320, 40, mm, 1);
+
+motor intakeMotor = motor(PORT7, false)
+penumatic pnemautic = penumatic(PORT8, false)
 
 double Kp = 0.3;
 double Ki = 0.0;
@@ -73,6 +78,22 @@ void userControlLoop() {
         }
 
         vex::task::sleep(20);
+
+        // for intake
+        if (Controller.ButtonR1.pressing()) {
+            intakeMotor.spin(forward, 100, percent); 
+        } else if (Controller.ButtonR2.pressing()) {
+            intakeMotor.spin(reverse, 100, percent);
+        } else {
+            intakeMotor.stop(); 
+        }
+
+        // pneumatic clamp
+        if (Controller.ButtonL1.pressing()) {
+            clampPneumatics.extend(); 
+        } else if (Controller.ButtonL2.pressing()) {
+            clampPneumatics.retract(); 
+        }
     }
 }
 
