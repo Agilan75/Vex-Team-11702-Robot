@@ -15,19 +15,20 @@
 	},
 	"configurations": [
 		{
-			"name": "Win32",
+			"name": "macos-clang-arm64",
 			"includePath": [
-				"${vex_sdkIncludes}"
+				"${workspaceFolder}/**"
 			],
-			"compilerPath": "${vex_compilerPath}",
-			"cStandard": "gnu99",
-			"cppStandard": "gnu++11",
-			"intelliSenseMode": "windows-clang-x86"
+			"compilerPath": "/usr/bin/clang",
+			"cStandard": "${default}",
+			"cppStandard": "${default}",
+			"intelliSenseMode": "macos-clang-arm64"
 		},
 		{
 			"name": "Mac",
 			"includePath": [
-				"${vex_sdkIncludes}"
+				"${vex_sdkIncludes}",
+				"${workspaceFolder}/include"
 			],
 			"compilerPath": "${vex_compilerPath}",
 			"cStandard": "gnu99",
