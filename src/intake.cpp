@@ -3,19 +3,33 @@
 using namespace vex;
 
 class IntakeSubsystem {
+
 private:
     motor intakeMotor;
+    controller* control;
+
 
 public:
-    IntakeSubsystem() : intakeMotor(motor(PORT7)) {}
+    IntakeSubsystem(intakeMotor M, controller* c) : intakeMotor(M), control(c){}
+    
+    void controlIntake() {
 
-    void controlIntake(controller::button intakeIn, controller::button intakeOut) {
-        if (intakeIn.pressing()) {
+        while true{
+
+            if (contol -> ButtonA.pressing()) {
             intakeMotor.spin(forward, 100, percent);
-        } else if (intakeOut.pressing()) {
+
+        } else if (control -> ButtonB.pressing()) {
             intakeMotor.spin(reverse, 100, percent);
+
         } else {
             intakeMotor.stop();
         }
+
+        wait(20, msec);
+
+        }
+        
     }
+
 };
