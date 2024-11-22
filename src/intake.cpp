@@ -1,21 +1,18 @@
 #include "vex.h"
+#include "IntakeSubsystem.h"
 
 using namespace vex;
 
-class IntakeSubsystem {
-private:
-    motor intakeMotor;
+IntakeSubsystem ::IntakeSubsystem(): 
+    intake(PORT11, true) {}
 
-public:
-    IntakeSubsystem() : intakeMotor(motor(PORT7)) {}
 
-    void controlIntake(controller::button intakeIn, controller::button intakeOut) {
-        if (intakeIn.pressing()) {
-            intakeMotor.spin(forward, 100, percent);
-        } else if (intakeOut.pressing()) {
-            intakeMotor.spin(reverse, 100, percent);
-        } else {
-            intakeMotor.stop();
-        }
-    }
-};
+void IntakeSubsystem :: setIntake(double speed){
+    intake.spin(forward, speed, percent); 
+
+}
+
+void IntakeSubsystem :: stop(){
+    intake.spin(forward, 0, percent);
+}
+    

@@ -17,8 +17,7 @@ motor_group rightMotors(rightMotorA, rightMotorB, rightMotorC);
 
 drivetrain Drivetrain = drivetrain(leftMotors, rightMotors, 259.34, 320, 40, mm, 1);
 
-motor intakeMotor = motor(PORT7, false)
-penumatic pnemautic = penumatic(PORT8, false)
+motor intakeMotor = motor(PORT7, false); 
 
 double Kp = 0.3;
 double Ki = 0.0;
@@ -89,11 +88,11 @@ void userControlLoop() {
         }
 
         // pneumatic clamp
-        if (Controller.ButtonL1.pressing()) {
-            clampPneumatics.extend(); 
-        } else if (Controller.ButtonL2.pressing()) {
-            clampPneumatics.retract(); 
-        }
+        // if (Controller.ButtonL1.pressing()) {
+        //     clampPneumatics.extend(); 
+        // } else if (Controller.ButtonL2.pressing()) {
+        //     clampPneumatics.retract(); 
+        // }
     }
 }
 
