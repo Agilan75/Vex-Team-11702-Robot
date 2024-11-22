@@ -1,10 +1,11 @@
 #include "vex.h"
 #include "IntakeSubsystem.h"
+#include "Constants.h"
 
 using namespace vex;
 
 IntakeSubsystem ::IntakeSubsystem(): 
-    intake(PORT11, true) {}
+    intake(Constants::INTAKE_MOTOR_PORT, true) {}
 
 
 void IntakeSubsystem :: setIntake(double speed){
