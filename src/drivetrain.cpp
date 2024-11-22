@@ -15,7 +15,7 @@ private:
 
 public:
 
-    // construcotr
+    // constructor
     DrivetrainSubsystem()
         : leftMotors(motor(PORT1), motor(PORT2), motor(PORT3)),
           rightMotors(motor(PORT4, true), motor(PORT5, true), motor(PORT6, true)),
