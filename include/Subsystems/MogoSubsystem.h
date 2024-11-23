@@ -4,12 +4,15 @@
 #include "vex.h"
 using namespace vex;
 
-class MogoSubsystem {
-private: 
+class MogoSubsystem
+{
+private:
+    digital_out clampPneumatic;
 
-public: 
-
-
+public:
+    MogoSubsystem();
+    void mogo(controller::button extendButton, controller::button retractButton);
+    void stop();
 };
 
 #endif

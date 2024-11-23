@@ -17,6 +17,9 @@ namespace Constants
     // Motor Ports Arm
     constexpr int ARM_MOTOR_PORT = 8;
 
+    // 3-Pin Ports Pneumatics
+    constexpr vex::triport::port &PNEUMATIC_PORT = Brain.ThreeWirePort.A;
+
     // Drivetrain Configuration
     constexpr double WHEEL_TRAVEL = 259.34;     // In mm
     constexpr double TRACK_WIDTH = 320.0;       // Distance between left and right wheels in mm
