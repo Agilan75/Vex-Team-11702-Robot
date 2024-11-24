@@ -3,6 +3,8 @@
 #include "Constants.h"
 using namespace vex;
 
+brain Brain;
+
 MogoSubsystem::MogoSubsystem() 
     : mogoPneumatic(digital_out(Brain.ThreeWirePort.B)) { 
     mogoPneumatic.set(false);
