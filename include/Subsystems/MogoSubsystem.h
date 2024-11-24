@@ -7,8 +7,11 @@ using namespace vex;
 
 class MogoSubsystem : public Subsystem {
 private: 
+    digital_out mogoPneumatic; 
 
-public:
+public: 
+    MogoSubsystem(); 
+    void controlPneumatics(controller::button extendButton, controller::button retractButton); 
 };
 
 #endif
