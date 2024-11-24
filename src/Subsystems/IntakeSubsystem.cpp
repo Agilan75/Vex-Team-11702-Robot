@@ -1,6 +1,7 @@
 #include "vex.h"
 #include "IntakeSubsystem.h"
 #include "Constants.h"
+#include "Subsystem.h"
 
 using namespace vex;
 

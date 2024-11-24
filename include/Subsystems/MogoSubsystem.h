@@ -2,14 +2,13 @@
 #define MOGOSUBSYSTEM_H
 
 #include "vex.h"
+#include "Subsystem.h"
 using namespace vex;
 
-class MogoSubsystem {
+class MogoSubsystem : public Subsystem {
 private: 
 
-public: 
-
-
+public:
 };
 
 #endif

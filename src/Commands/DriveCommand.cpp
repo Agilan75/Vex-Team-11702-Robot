@@ -9,10 +9,11 @@ DriveCommand ::DriveCommand(DriveSubsystem *dt, std::function<double()> leftSpee
     driveSubsystem(dt),
     leftInputProvider(leftSpeed),
     rightInputProvider(rightSpeed),
-    isFinishedCheck(false)
+    isFinishedBool(false)
 {}
 
 void DriveCommand :: initialize() {
+    Log::log("DriveCommand initialized");
 }
 
 void DriveCommand ::execute(){
@@ -24,8 +25,9 @@ void DriveCommand ::execute(){
 void DriveCommand ::end()
 {
     driveSubsystem->stop();
+    Log::log("DriveCommand ended");
 }
 
 bool DriveCommand ::isFinished() {
-    return isFinishedCheck;
+    return isFinishedBool;
 }

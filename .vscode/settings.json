@@ -31,7 +31,9 @@
 		"tuple": "cpp",
 		"type_traits": "cpp",
 		"utility": "cpp",
-		"typeinfo": "cpp"
+		"typeinfo": "cpp",
+		"sstream": "cpp",
+		"map": "cpp"
 	},
 	"C_Cpp_Runner.msvcBatchPath": "",
 	"C_Cpp_Runner.cCompilerPath": "clang",
