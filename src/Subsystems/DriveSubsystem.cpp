@@ -3,6 +3,8 @@
 #include "Constants.h"
 #include "Subsystem.h"
 
+using namespace vex;
+
 DriveSubsystem ::DriveSubsystem() :
     leftMotorA(Constants::LEFT_MOTOR_A_PORT, false),
     leftMotorB(Constants::LEFT_MOTOR_B_PORT, false),

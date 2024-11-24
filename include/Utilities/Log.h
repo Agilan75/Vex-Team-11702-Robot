@@ -49,4 +49,4 @@ private:
     }
 };
 
-#endif // LOG_H
+#endif

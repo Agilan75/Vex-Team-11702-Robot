@@ -1,9 +1,9 @@
 #ifndef COMMAND_H
 #define COMMAND_H
 
-#include <set> // For managing dependencies (subsystems)
+#include <set> 
 
-class Subsystem; // Forward declaration
+class Subsystem; 
 
 class Command
 {
@@ -20,4 +20,4 @@ public:
     virtual std::set<Subsystem*> getRequirements() const { return {}; }
 };
 
-#endif // COMMAND_H
+#endif

@@ -1,6 +1,10 @@
 #include "CommandScheduler.h"
 #include <vector>
 #include "Command.h"
+#include "Constants.h"
+#include "Subsystem.h"
+
+using namespace vex;
 
 void CommandScheduler::schedule(Command *command){
     auto requirements = command->getRequirements();

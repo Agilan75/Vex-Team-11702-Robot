@@ -1,6 +1,8 @@
 #include "vex.h"
 #include "MogoSubsystem.h"
 #include "Constants.h"
+#include "Subsystem.h"
+
 using namespace vex;
 
 brain Brain;
