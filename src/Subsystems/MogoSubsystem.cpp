@@ -1,4 +1,5 @@
 #include "vex.h"
+#include "Subsystem.h"
 using namespace vex;
 
 brain Brain;

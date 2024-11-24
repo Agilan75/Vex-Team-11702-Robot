@@ -1,6 +1,7 @@
 #include "vex.h"
 #include "DriveSubsystem.h"
 #include "Constants.h"
+#include "Subsystem.h"
 
 DriveSubsystem ::DriveSubsystem() :
     leftMotorA(Constants::LEFT_MOTOR_A_PORT, false),

@@ -1,21 +1,24 @@
 #ifndef DRIVECOMMAND_H
 #define DRIVECOMMAND_H
 
+#include "Command.h"
 #include "Subsystems/DriveSubsystem.h"
+#include <functional> 
 
-class DriveCommand{
+
+class DriveCommand : public Command{
 private:
     DriveSubsystem* driveSubsystem;
-    int leftSpeed;
-    int rightSpeed;
-    bool isFinished;
+    std::function<double()> leftInputProvider; 
+    std::function<double()> rightInputProvider;
+    bool isFinishedBool;
 
 public:
-    DriveCommand(DriveSubsystem *dt, int leftSpeed, int rightSpeed);
-    void initialize();
-    void execute();
-    bool isComplete();
-    void end();
+    DriveCommand(DriveSubsystem* dt, std::function<double()> leftSpeed, std::function<double()> rightSpeed);
+    void initialize() override;
+    void execute() override;
+    bool isFinished() override;
+    void end() override; //ADD THE FUNNY REQUIRMENTS
 };
 
 #endif
