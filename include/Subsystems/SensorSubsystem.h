@@ -2,18 +2,21 @@
 #define SENSORSUBSYSTEM_H
 
 #include "vex.h"
+#include "Subsystem.h"
+
 using namespace vex;
 
-class SensorSubsystem {
+class SensorSubsystem : public Subsystem{
 private:
-    bumper bumperSensor;   
+    bumper bumperSensor;
     inertial inertialSensor;
-    distance distanceSensor; 
-    rotation rotationSensor; 
+    distance distanceSensor;
+    rotation rotationSensor;
     vision visionSensor
 
-public:
-    SensorSubsystem(); 
+public: 
+
+    SensorSubsystem();
 
     bool isBumperPressed();
     double getInertialHeading();

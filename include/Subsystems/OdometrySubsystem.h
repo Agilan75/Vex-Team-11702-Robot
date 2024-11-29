@@ -2,8 +2,9 @@
 #define ODOMETRY_SUBSYSTEM_H
 
 #include "vex.h"
+#include "Subsystem.h"
 
-class OdometrySubsystem {
+class OdometrySubsystem : public Subsystem{
 private:
     vex::motor_group& leftMotors;
     vex::motor_group& rightMotors;
