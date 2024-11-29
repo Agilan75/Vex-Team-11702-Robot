@@ -10,7 +10,8 @@ private:
     digital_out mogoPneumatic; 
 
 public: 
-    MogoSubsystem(); 
+    MogoSubsystem();
+    
     void controlPneumatics(controller::button extendButton, controller::button retractButton); 
 };
 

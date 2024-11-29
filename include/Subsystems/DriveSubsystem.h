@@ -15,6 +15,7 @@ private:
 
 public:
     DriveSubsystem();
+    
     void drive(double leftSpeed, double rightSpeed);
     void stop();
 };

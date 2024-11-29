@@ -27,6 +27,46 @@ public:
         std::cout << format(message, args...) << std::endl;
     }
 
+    // Specific Logs for Subsystems
+    static void logDriveSubsystem(double leftSpeed, double rightSpeed) {
+        log("DriveSubsystem - Left Speed: ", leftSpeed, " | Right Speed: ", rightSpeed);
+    }
+
+    static void logArmSubsystem(double motorSpeed, double targetPosition = -1) {
+        if (targetPosition >= 0) {
+            log("ArmSubsystem - Motor Speed: ", motorSpeed, 
+                " | Target Position: ", targetPosition);
+        } else {
+            log("ArmSubsystem - Motor Speed: ", motorSpeed);
+        }
+    }
+
+    static void logPneumaticSubsystem(bool clampState) {
+        log("PneumaticSubsystem - Clamp State: ", clampState ? "Engaged" : "Released");
+    }
+
+    static void logOdometrySubsystem(double xPosition, double yPosition, double heading) {
+        log("OdometrySubsystem - Position (x, y): (", xPosition, ", ", yPosition, 
+            ") | Heading: ", heading);
+    }
+
+    static void logIntakeSubsystem(double motorSpeed, bool isIntaking) {
+        log("IntakeSubsystem - Motor Speed: ", motorSpeed, 
+            " | Action: ", isIntaking ? "Intaking" : "Reversing");
+    }
+
+    static void logSensorSubsystem(double distance, double heading, bool bumperPressed, double rotation) {
+        log("SensorSubsystem - Distance: ", distance, 
+            " | Heading: ", heading, 
+            " | Bumper: ", bumperPressed ? "Pressed" : "Not Pressed", 
+            " | Rotation: ", rotation);
+    }
+
+    static void logVisionSubsystem(int objectCenterX, bool objectExists) {
+        log("VisionSubsystem - Object Center X: ", objectCenterX, 
+            " | Exists: ", objectExists ? "Yes" : "No");
+    }
+
 private:
     // Helper to format messages with variables
     template <typename... Args>
@@ -49,4 +89,4 @@ private:
     }
 };
 
-#endif // LOG_H
+#endif

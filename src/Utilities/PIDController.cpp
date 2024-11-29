@@ -1,5 +1,8 @@
 #include "vex.h"
 #include "PIDController.h"
+#include "Subsystem.h"
+#include "Constants.h"
+
 using namespace vex;
 
 PIDController::PIDController(double kP, double kI, double kD):

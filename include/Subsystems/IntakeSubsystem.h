@@ -11,6 +11,7 @@ private:
 
 public:
     IntakeSubsystem();
+    
     void setIntake(double speed); 
     void stop();
 };
