@@ -6,18 +6,19 @@
 
 using namespace vex;
 
-class SensorSubsystem : public Subsystem{
+class SensorSubsystem : public Subsystem
+{
 private:
+    motor intake;
     bumper bumperSensor;
     inertial inertialSensor;
     distance distanceSensor;
     rotation rotationSensor;
-    vision visionSensor
+    vision visionSensor;
 
 public: 
-
+    
     SensorSubsystem();
-
     bool isBumperPressed();
     double getInertialHeading();
     double getDistance();
