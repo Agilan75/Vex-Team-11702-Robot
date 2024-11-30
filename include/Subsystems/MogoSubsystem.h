@@ -12,7 +12,7 @@ private:
 public: 
     MogoSubsystem();
     
-    void controlPneumatics(controller::button extendButton, controller::button retractButton); 
+    void controlPneumatics(bool onOff); 
 };
 
 #endif

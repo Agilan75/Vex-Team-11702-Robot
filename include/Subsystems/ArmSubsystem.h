@@ -6,16 +6,14 @@ using namespace vex;
 
 class ArmSubsystem {
 private:
-    motor armMotor;     
+    motor armMotor;    
     
 public:
     ArmSubsystem();
     
-    void liftArm();
-    void lowerArm();
-    void stopArm();
+    void setArm(double spinDeg);
+    void resetArm();
 
-    void moveToPosition(double targetDegrees, double speed = 50);
 };
 
 #endif

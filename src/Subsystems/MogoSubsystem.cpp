@@ -14,14 +14,9 @@ MogoSubsystem::MogoSubsystem()
     Log::log("PneumaticSubsystem - Pneumatic initialized and set to default (retracted).");
 }
 
-void MogoSubsystem::controlPneumatics(controller::button extendButton, controller::button retractButton) {
-    if (extendButton.pressing()) {
-        mogoPneumatic.set(true);
-        Log::log("Pneumaticubsystem - Pneumatic extended.");
-    } else if (retractButton.pressing()) {
-        mogoPneumatic.set(false);
-        Log::log("PneumaticSubsystem - Pneumatic retracted.");
-    }
+void MogoSubsystem::controlPneumatics(bool onOff) {
+        mogoPneumatic.set(onOff);
+        Log::log(((onOff)? ("Pneumaticubsystem - Pneumatic extended.") : ("PneumaticSubsystem - Pneumatic retracted.")));
 }
 
 
