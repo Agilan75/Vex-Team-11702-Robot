@@ -9,11 +9,8 @@ using namespace vex;
 class SensorSubsystem : public Subsystem
 {
 private:
-    motor intake;
-    bumper bumperSensor;
     inertial inertialSensor;
-    distance distanceSensor;
-    rotation rotationSensor;
+    distance distanceSensor1;
     vision visionSensor;
 
 public: 

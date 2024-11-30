@@ -3,6 +3,7 @@
 #include "Command.h"
 #include "Constants.h"
 #include "Subsystem.h"
+#include "vex.h"
 
 using namespace vex;
 

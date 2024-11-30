@@ -22,8 +22,8 @@ namespace Constants
 
     const bool ARM_MOTOR_REVERSED = false;
     
-    const double ARM_LIFT_SPEED = 50.0; 
-    const double ARM_LOWER_SPEED = 30.0;
+    // const double ARM_LIFT_SPEED = 50.0; 
+    // const double ARM_LOWER_SPEED = 30.0;
     const double ARM_MOTOR_RATIO = 36; 
 
     constexpr int INERTIAL_SENSOR_PORT = 9;

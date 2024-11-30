@@ -2,6 +2,8 @@
 
 using namespace vex;
 
+competition Competition;
+
 brain Brain;
 controller Controller;
 
@@ -17,75 +19,74 @@ motor_group rightMotors(rightMotorA, rightMotorB, rightMotorC);
 
 drivetrain Drivetrain = drivetrain(leftMotors, rightMotors, 259.34, 320, 40, mm, 1);
 
-motor intakeMotor = motor(PORT7, false); 
+motor intakeMotor = motor(PORT7, false);
 
-double Kp = 0.3;
-double Ki = 0.0;
-double Kd = 0.05;
+digital_out mogoPneumatic = digital_out(Brain.ThreeWirePort.B);
 
-double leftError, rightError;
-double leftPrevError = 0, rightPrevError = 0;
-double leftIntegral = 0, rightIntegral = 0;
-double leftDerivative, rightDerivative;
-double leftTargetSpeed, rightTargetSpeed;
-
-// capping integral so dont go too big to the point it dont work
-double maxIntegral = 50;
-
-// for joystick sensitivity when touching and inputs
 int deadband = 5;
 int scaleFactor = 3;
 
-void userControlLoop() {
+void pre_auton(void)
+{
+
+    // All activities that occur before the competition starts
+    // Example: clearing encoders, setting servo positions, ...
+}
+
+void autonomous(void)
+{
+    // ..........................................................................
+    // Insert autonomous user code here.
+    // ..........................................................................
+}
+
+void usercontrol(void){
     Drivetrain.setStopping(brake);
 
     while (true) {
         // for joystcik movement
-        int forwardSpeed = Controller.Axis2.position() * scaleFactor;
-        int turnSpeed = Controller.Axis1.position() * scaleFactor;
+        int rightSpeed = Controller.Axis2.position() * scaleFactor;
+        int leftSpeed = Controller.Axis1.position() * scaleFactor;
 
-        if (abs(forwardSpeed) < deadband && abs(turnSpeed) < deadband) {
-            forwardSpeed = 0;
-            turnSpeed = 0;
+        if (abs(rightSpeed) < deadband && abs(leftSpeed) < deadband) {
+            rightSpeed = 0;
+            leftSpeed = 0;
         }
 
-        // speeds
-        leftTargetSpeed = forwardSpeed + turnSpeed;
-        rightTargetSpeed = forwardSpeed - turnSpeed;
-        double leftCurrentSpeed = leftMotors.velocity(percent);
-        double rightCurrentSpeed = rightMotors.velocity(percent);
+        leftMotors.spin(forward, leftSpeed, percent);
+        rightMotors.spin(forward, rightSpeed, percent); 
 
-        // pid for left motor
-        leftError = leftTargetSpeed - leftCurrentSpeed;
-        leftIntegral += leftError;
-        leftDerivative = leftError - leftPrevError;
-        double leftOutput = (Kp * leftError) + (Ki * leftIntegral) + (Kd * leftDerivative);
-        leftMotors.spin(forward, leftOutput, percent);
-        leftPrevError = leftError;
-
-        // pid for right motor
-        rightError = rightTargetSpeed - rightCurrentSpeed;
-        rightIntegral += rightError;
-        rightDerivative = rightError - rightPrevError;
-        double rightOutput = (Kp * rightError) + (Ki * rightIntegral) + (Kd * rightDerivative);
-        rightMotors.spin(forward, rightOutput, percent);
-        rightPrevError = rightError;
-
-        if (forwardSpeed == 0 && turnSpeed == 0) {
+           
+        if (rightSpeed == 0 && leftSpeed == 0)
+        {
             leftMotors.stop();
             rightMotors.stop();
+        }
+
+        if (Controller.ButtonR1.pressing())
+        {
+            intakeMotor.spin(forward, 100, percent);
+        }
+        else if (Controller.ButtonR2.pressing())
+        {
+            intakeMotor.spin(reverse, 100, percent);
+        }
+        else
+        {
+            intakeMotor.stop();
+        }
+
+        // pneumatic clamp
+        if (Controller.ButtonL1.pressing()) {
+            mogoPneumatic.set(true);
+        } else if (Controller.ButtonL2.pressing()) {
+            mogoPneumatic.set(false);
         }
 
         vex::task::sleep(20);
 
         // for intake
-        if (Controller.ButtonR1.pressing()) {
-            intakeMotor.spin(forward, 100, percent); 
-        } else if (Controller.ButtonR2.pressing()) {
-            intakeMotor.spin(reverse, 100, percent);
-        } else {
-            intakeMotor.stop(); 
-        }
+       
 
         // pneumatic clamp
         // if (Controller.ButtonL1.pressing()) {
@@ -96,6 +97,19 @@ void userControlLoop() {
     }
 }
 
+
+
+
 int main() {
-    userControlLoop();
+    Competition.autonomous(autonomous);
+    Competition.drivercontrol(usercontrol);
+
+    // Run the pre-autonomous function.
+    pre_auton();
+
+    // Prevent main from exiting with an infinite loop.
+    while (true)
+    {
+        wait(100, msec);
+    }
 }
